@@ -1,0 +1,11 @@
+[
+  {
+    "type": "requestfailed",
+    "url": "http://localhost:3001/dashboard",
+    "method": "GET",
+    "timestamp": 1761753528415,
+    "failure": {
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    }
+  }
+]
