@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import api from "../lib/api";
@@ -20,6 +20,7 @@ export default function ChatPage() {
   const [ttsEnabled, setTtsEnabled] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [userData, setUserData] = useState(null);
 
@@ -382,21 +383,33 @@ export default function ChatPage() {
 
   return (
     <Layout>
-      <div className="flex h-[calc(100vh-64px)] overflow-hidden bg-gray-900 text-gray-100">
+      <div className="relative flex h-[calc(100vh-64px)] overflow-hidden bg-gray-900 text-gray-100">
         <ChatSidebar
           chats={chats}
           selectedChatId={selectedChat?._id}
-          onSelectChat={openChat}
-          onNewChat={startNewChat}
+          onSelectChat={(chat) => { openChat(chat); setIsSidebarOpen(false); }}
+          onNewChat={() => { startNewChat(); setIsSidebarOpen(false); }}
           showArchived={showArchived}
           setShowArchived={setShowArchived}
           onDeleteChat={deleteChat}
           onRenameChat={renameChat}
           onArchiveChat={archiveChat}
+          isOpen={isSidebarOpen}
+          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         />
 
+        {isSidebarOpen && (
+          <div
+            onClick={() => setIsSidebarOpen(false)}
+            className="fixed inset-0 bg-black/60 z-20 md:hidden backdrop-blur-sm"
+          />
+        )}
+
         <main className="flex-1 flex flex-col min-w-0 bg-gray-900">
-          <ChatSubnav onSelect={(dept) => setInput(`${dept}: `)} />
+          <ChatSubnav
+            onSelect={(dept) => setInput(`${dept}: `)}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          />
 
           <div className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
             <div className="max-w-3xl mx-auto space-y-6">
@@ -454,8 +467,8 @@ export default function ChatPage() {
           </div>
 
           <div className="p-4 bg-gray-900 sticky bottom-0">
-            <div className={`max-w-3xl mx-auto bg-gemini-surface rounded-3xl flex items-center gap-2 px-4 py-2 ring-1 ring-gray-700/50 focus-within:ring-gemini-green/50 transition-shadow ${loading ? 'opacity-50' : ''}`}>
-              <button className="p-2 rounded-full hover:bg-gemini-hover text-gray-400 transition-colors">
+            <div className={`max-w-3xl mx-auto bg-gemini-surface rounded-3xl flex items-center justify-between w-full gap-2 px-3 py-2 ring-1 ring-gray-700/50 focus-within:ring-gemini-green/50 transition-shadow ${loading ? 'opacity-50' : ''}`}>
+              <button className="p-2 rounded-full hover:bg-gemini-hover text-gray-400 transition-colors shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -466,59 +479,61 @@ export default function ChatPage() {
                 onKeyDown={(e) => e.key === "Enter" && !loading && sendMessage()}
                 placeholder="Enter a prompt here"
                 disabled={loading}
-                className="flex-1 bg-transparent border-none outline-none text-gray-100 placeholder-gray-500 h-12"
+                className="flex-1 min-w-0 bg-transparent border-none outline-none text-gray-100 placeholder-gray-500 h-12 px-2"
               />
 
-              {/* TTS Toggle Button - Plays last AI message */}
-              <button
-                onClick={() => {
-                  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-                  if (ttsEnabled) {
-                    window.speechSynthesis.cancel();
-                    setTtsEnabled(false);
-                  } else {
-                    const lastAiMsg = [...messages].reverse().find(m => m.role === 'ai');
-                    if (lastAiMsg && lastAiMsg.content) {
-                      setTtsEnabled(true);
-                      const utter = new SpeechSynthesisUtterance(lastAiMsg.content);
-                      utter.onend = () => setTtsEnabled(false);
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                {/* TTS Toggle Button - Plays last AI message */}
+                <button
+                  onClick={() => {
+                    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+                    if (ttsEnabled) {
                       window.speechSynthesis.cancel();
-                      window.speechSynthesis.speak(utter);
+                      setTtsEnabled(false);
+                    } else {
+                      const lastAiMsg = [...messages].reverse().find(m => m.role === 'ai');
+                      if (lastAiMsg && lastAiMsg.content) {
+                        setTtsEnabled(true);
+                        const utter = new SpeechSynthesisUtterance(lastAiMsg.content);
+                        utter.onend = () => setTtsEnabled(false);
+                        window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(utter);
+                      }
                     }
-                  }
-                }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors text-white shadow-lg ${ttsEnabled
-                  ? 'bg-teal-700 shadow-teal-900/20'
-                  : 'bg-teal-600 hover:bg-teal-500 shadow-teal-900/20'
-                  }`}
-                title="Hold to Listen"
-              >
-                {ttsEnabled ? (
-                  <>
-                    <span>Listening...</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 animate-pulse">
-                      <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 2.485.735 4.817 2.018 6.772.33 1.134 1.455 1.728 2.555 1.728h1.275l5.242 5.242c.875.875 2.385.253 2.385-1.002V13.5h.525c.82 0 1.625.32 2.228.895.534.51.817 1.25.817 2.095v.015c0 .845-.283 1.585-.817 2.095-.603.575-1.408.895-2.228.895H13.25c-1.243 0-2.25 1.007-2.25 2.25s1.007 2.25 2.25 2.25h1.59c1.64 0 3.25-.64 4.455-1.79 1.25-1.19 1.955-2.915 1.955-4.805v-.015c0-1.89-.705-3.615-1.955-4.805A6.02 6.02 0 0015.375 14h-.5V4.06zM13.5 4.06v9.44m0-9.44c1.243 0 2.25 1.007 2.25 2.25v2.25" />
-                    </svg>
-                  </>
-                ) : (
-                  <>
-                    <span>Hold to Listen</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.74 3.63 8.25 4.51 8.25H6.75z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </>
-                )}
-              </button>
-
-              <VoiceRecorder onTranscribed={(text) => setInput(prev => prev + " " + text)} />
-              {input.trim() && (
-                <button onClick={sendMessage} className="p-2 rounded-full bg-gemini-green text-black hover:bg-gemini-green-dark transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                    <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-                  </svg>
+                  }}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full transition-colors text-white shadow-lg ${ttsEnabled
+                    ? 'bg-teal-700 shadow-teal-900/20'
+                    : 'bg-teal-600 hover:bg-teal-500 shadow-teal-900/20'
+                    }`}
+                  title="Hold to Listen"
+                >
+                  {ttsEnabled ? (
+                    <>
+                      <span className="hidden sm:inline">Listening...</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 animate-pulse">
+                        <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 2.485.735 4.817 2.018 6.772.33 1.134 1.455 1.728 2.555 1.728h1.275l5.242 5.242c.875.875 2.385.253 2.385-1.002V13.5h.525c.82 0 1.625.32 2.228.895.534.51.817 1.25.817 2.095v.015c0 .845-.283 1.585-.817 2.095-.603.575-1.408.895-2.228.895H13.25c-1.243 0-2.25 1.007-2.25 2.25s1.007 2.25 2.25 2.25h1.59c1.64 0 3.25-.64 4.455-1.79 1.25-1.19 1.955-2.915 1.955-4.805v-.015c0-1.89-.705-3.615-1.955-4.805A6.02 6.02 0 0015.375 14h-.5V4.06zM13.5 4.06v9.44m0-9.44c1.243 0 2.25 1.007 2.25 2.25v2.25" />
+                      </svg>
+                    </>
+                  ) : (
+                    <>
+                      <span className="hidden sm:inline">Hold to Listen</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.74 3.63 8.25 4.51 8.25H6.75z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </>
+                  )}
                 </button>
-              )}
+
+                <VoiceRecorder onTranscribed={(text) => setInput(prev => prev + " " + text)} />
+                {input.trim() && (
+                  <button onClick={sendMessage} className="p-2 rounded-full bg-gemini-green text-black hover:bg-gemini-green-dark transition-colors shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                      <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                    </svg>
+                  </button>
+                )}
+              </div>
             </div>
             {/* Disclaimer Removed */}
           </div>

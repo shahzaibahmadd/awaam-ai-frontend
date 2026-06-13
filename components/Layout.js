@@ -18,7 +18,7 @@ export default function Layout({ children }) {
         <Navbar />
         {/* Main content area with padding-top to offset the fixed navbar */}
         {/* We use h-screen and pt-[57px] to make the content fill the viewport */}
-        <main className="flex-1 flex flex-col pt-[57px] h-screen">
+        <main className="flex-1 flex flex-col pt-[57px]">
           {children}
         </main>
       </div>

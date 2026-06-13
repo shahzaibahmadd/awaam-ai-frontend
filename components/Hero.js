@@ -21,7 +21,7 @@ export default function Hero() {
     return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(id); };
   }, []);
   return (
-    <section className="relative isolate min-h-[78vh] flex items-center justify-center overflow-hidden">
+    <section className="relative isolate min-h-[78vh] pt-16 md:pt-0 flex items-center justify-center overflow-hidden">
       {/* animated glow */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-emerald-900/10 via-transparent to-transparent" />
       <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl animate-float" />

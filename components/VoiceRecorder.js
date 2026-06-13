@@ -98,11 +98,11 @@ export default function VoiceRecorder({ onTranscribed, lang, holdToSpeak = true 
       onContextMenu={(e) => e.preventDefault()}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
-      className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${recording ? "bg-red-500" : "bg-emerald-600"} text-white shadow-lg shadow-emerald-900/20`}
+      className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full transition-colors ${recording ? "bg-red-500" : "bg-emerald-600"} text-white shadow-lg shadow-emerald-900/20`}
       aria-pressed={recording}
       title={recording ? "Release to send" : "Hold to speak"}
     >
-      <span>{recording ? "Release to Send" : "Hold to Speak"}</span>
+      <span className="hidden sm:inline">{recording ? "Release to Send" : "Hold to Speak"}</span>
       {recording ? (
         <span className="animate-pulse">🎙️</span>
       ) : (

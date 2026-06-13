@@ -55,38 +55,36 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-20 border-b border-emerald-900/40 bg-gradient-to-b from-gray-900/80 to-gray-900/40 backdrop-blur-xl">
       <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center justify-between w-full">
-          <Link href="/" className="inline-flex items-center gap-3 group">
-            <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-500/30">
-              <span className="absolute inset-0 rounded-xl blur-md bg-emerald-500/30 group-hover:bg-emerald-400/40 transition-colors" />
-              <span className="text-lg font-bold text-emerald-300">AI</span>
-            </span>
-            <span className="text-lg sm:text-xl font-semibold tracking-tight text-gray-100">
-              Awaam AI
-            </span>
-          </Link>
+        <Link href="/" className="inline-flex items-center gap-3 group shrink-0">
+          <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-500/30">
+            <span className="absolute inset-0 rounded-xl blur-md bg-emerald-500/30 group-hover:bg-emerald-400/40 transition-colors" />
+            <span className="text-lg font-bold text-emerald-300">AI</span>
+          </span>
+          <span className="text-lg sm:text-xl font-semibold tracking-tight text-gray-100">
+            Awaam AI
+          </span>
+        </Link>
 
-          <div className="hidden md:flex items-center gap-3">
-            {!isLoggedIn && (
-              <>
-                <Link href="/" className="nav-link">Home</Link>
-                <Link href="/info" className="nav-link">About</Link>
-                <Link href="/get-started" className="button-primary">Get Started</Link>
-              </>
-            )}
-            {isLoggedIn && (
-              <>
-                <Link href="/dashboard" className={`nav-link ${router.pathname === '/dashboard' ? 'active' : ''}`}>Dashboard</Link>
-                <Link href="/news" className={`nav-link ${router.pathname === '/news' ? 'active' : ''}`}>News</Link>
-                <Link href="/chat" className={`nav-link ${router.pathname === '/chat' ? 'active' : ''}`}>Chat</Link>
-                <Link href="/tracker" className={`nav-link ${router.pathname === '/tracker' ? 'active' : ''}`}>Tracker</Link>
-                <button onClick={logout} className="button-danger">Logout</button>
-              </>
-            )}
-          </div>
+        <div className="hidden md:flex items-center gap-3">
+          {!isLoggedIn && (
+            <>
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/info" className="nav-link">About</Link>
+              <Link href="/get-started" className="button-primary">Get Started</Link>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              <Link href="/dashboard" className={`nav-link ${router.pathname === '/dashboard' ? 'active' : ''}`}>Dashboard</Link>
+              <Link href="/news" className={`nav-link ${router.pathname === '/news' ? 'active' : ''}`}>News</Link>
+              <Link href="/chat" className={`nav-link ${router.pathname === '/chat' ? 'active' : ''}`}>Chat</Link>
+              <Link href="/tracker" className={`nav-link ${router.pathname === '/tracker' ? 'active' : ''}`}>Tracker</Link>
+              <button onClick={logout} className="button-danger">Logout</button>
+            </>
+          )}
         </div>
 
-        <button aria-label="Menu" className="md:hidden text-gray-200 hover:text-white transition-colors" onClick={() => setMenuOpen(v => !v)}>
+        <button aria-label="Menu" className="md:hidden text-gray-200 hover:text-white transition-colors shrink-0 p-1" onClick={() => setMenuOpen(v => !v)}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
             <path fillRule="evenodd" d="M3.75 5.25a.75.75 0 01.75-.75h15a.75.75 0 010 1.5h-15a.75.75 0 01-.75-.75zm0 6a.75.75 0 01.75-.75h15a.75.75 0 010 1.5h-15a.75.75 0 01-.75-.75zm0 6a.75.75 0 01.75-.75h15a.75.75 0 010 1.5h-15a.75.75 0 01-.75-.75z" clipRule="evenodd" />
           </svg>
@@ -94,13 +92,13 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile menu */}
-      <div className={`md:hidden origin-top transition-all duration-300 ${menuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'} bg-gray-900/80 backdrop-blur-xl border-t border-gray-800`}>
-        <div className="px-4 py-3 flex flex-col gap-2">
+      <div className={`md:hidden transition-all duration-300 ease-in-out ${menuOpen ? 'max-h-96 opacity-100 py-3 border-t border-gray-800' : 'max-h-0 opacity-0 overflow-hidden'} bg-gray-900/95 backdrop-blur-xl`}>
+        <div className="px-4 flex flex-col gap-2">
           {!isLoggedIn && (
             <>
               <Link href="/" className="nav-link w-full">Home</Link>
               <Link href="/info" className="nav-link w-full">About</Link>
-              <Link href="/get-started" className="button-primary w-full text-center">Get Started</Link>
+              <Link href="/get-started" className="button-primary w-full text-left">Get Started</Link>
             </>
           )}
           {isLoggedIn && (

@@ -262,7 +262,7 @@ export default function Tracker() {
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto pr-2 space-y-3 z-10 custom-scrollbar">
+                <div className="flex-1 md:overflow-y-auto md:max-h-[60vh] overflow-visible pr-0 md:pr-2 space-y-3 z-10 custom-scrollbar">
                   {checklist.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center text-center mt-10">
                       <div className="relative mb-6">

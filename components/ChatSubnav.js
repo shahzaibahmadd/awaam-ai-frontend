@@ -1,11 +1,21 @@
-export default function ChatSubnav({ onSelect }) {
+export default function ChatSubnav({ onSelect, onToggleSidebar }) {
   const items = [
     'DLIMS', 'NADRA', 'DGIP', 'Zameen', 'ECP', 'FBR', 'SECP', 'PSP', 'Punjab Police'
   ];
 
   return (
     <div className="sticky top-0 z-10 bg-gemini-bg pt-2">
-      <div className="mx-auto max-w-3xl px-4 flex gap-6 overflow-x-auto no-scrollbar border-b border-gray-800">
+      <div className="mx-auto max-w-3xl px-4 flex items-center gap-4 border-b border-gray-800">
+        <button
+          onClick={onToggleSidebar}
+          className="md:hidden p-2 -ml-2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+          aria-label="Toggle Chat List"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+        <div className="flex-grow flex gap-6 overflow-x-auto no-scrollbar py-3">
         {items.map((item) => (
           <button
             key={item}
@@ -18,6 +28,7 @@ export default function ChatSubnav({ onSelect }) {
         ))}
       </div>
     </div>
+  </div>
   );
 }
 
