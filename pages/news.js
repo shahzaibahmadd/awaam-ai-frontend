@@ -20,7 +20,7 @@ export default function News() {
 
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-      const response = await axios.get(`${API_BASE_URL}/api/news${query ? `?keyword=${query}` : ''}`);
+      const response = await axios.get(`${API_BASE_URL}/news${query ? `?keyword=${query}` : ''}`);
 
       if (response.data && response.data.success) {
         setNews(response.data.data);

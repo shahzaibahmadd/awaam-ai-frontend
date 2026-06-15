@@ -21,7 +21,7 @@ export default function SingleNews() {
         // const response = await axios.get(`http://localhost:5000/api/news/${id}`);
         const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-        const response = await axios.get(`${API_BASE_URL}/api/news/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/news/${id}`);
         if (response.data && response.data.success) {
           setNews(response.data.data);
         } else {
