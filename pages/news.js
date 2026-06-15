@@ -16,7 +16,12 @@ export default function News() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`http://localhost:5000/api/news${query ? `?keyword=${query}` : ''}`);
+      // const response = await axios.get(`http://localhost:5000/api/news${query ? `?keyword=${query}` : ''}`);
+
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+      const response = await axios.get(`${API_BASE_URL}/api/news${query ? `?keyword=${query}` : ''}`);
+
       if (response.data && response.data.success) {
         setNews(response.data.data);
       }
@@ -53,7 +58,7 @@ export default function News() {
     <div className="min-h-screen bg-[#0B111D] text-gray-100 flex flex-col font-sans">
       <Navbar />
       <main className="max-w-6xl mx-auto px-4 md:px-6 flex-1 w-full relative z-10 pt-28 pb-12">
-        
+
         {/* Page Header matching 'Good Evening, Pakistanio!' vibe */}
         <header className="mb-12 text-center md:text-left flex flex-col items-center md:items-start">
           <p className="text-emerald-500/80 font-bold tracking-[0.2em] text-xs uppercase mb-3">PAKISTAN GOVERNMENT & NEWS SERVICES</p>
@@ -67,27 +72,27 @@ export default function News() {
 
         {/* Dynamic Search Bar styled like Chat Input */}
         <form onSubmit={handleSearch} className="mb-12 flex items-center justify-center md:justify-start w-full relative group max-w-3xl">
-           <div className="relative w-full flex items-center bg-[#131A26] rounded-full border border-gray-700/50 hover:border-emerald-500/40 focus-within:border-emerald-500/70 focus-within:ring-1 focus-within:ring-emerald-500/50 transition-all shadow-sm pl-6 pr-2 py-2.5">
-             <input
-                type="text"
-                placeholder="Type a keyword or topic..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="flex-1 bg-transparent border-none text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm md:text-base font-medium py-1"
-             />
-             <div className="flex gap-2">
-                {/* Search Button matching the circular send button */}
-                <button 
-                  type="submit" 
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 flex items-center justify-center text-white transition-all transform hover:scale-105 active:scale-95 flex-shrink-0"
-                  aria-label="Search"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>
-                </button>
-             </div>
-           </div>
+          <div className="relative w-full flex items-center bg-[#131A26] rounded-full border border-gray-700/50 hover:border-emerald-500/40 focus-within:border-emerald-500/70 focus-within:ring-1 focus-within:ring-emerald-500/50 transition-all shadow-sm pl-6 pr-2 py-2.5">
+            <input
+              type="text"
+              placeholder="Type a keyword or topic..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="flex-1 bg-transparent border-none text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm md:text-base font-medium py-1"
+            />
+            <div className="flex gap-2">
+              {/* Search Button matching the circular send button */}
+              <button
+                type="submit"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 flex items-center justify-center text-white transition-all transform hover:scale-105 active:scale-95 flex-shrink-0"
+                aria-label="Search"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </form>
 
         {/* Status Messaging */}
@@ -96,11 +101,11 @@ export default function News() {
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-500"></div>
           </div>
         )}
-        
+
         {error && (
           <div className="bg-red-900/10 border-l-4 border-red-500 p-4 rounded-xl flex items-center gap-3 animate-fade-in max-w-3xl">
-             <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-             <span className="text-red-400 font-medium text-sm">{error}</span>
+            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span className="text-red-400 font-medium text-sm">{error}</span>
           </div>
         )}
 
@@ -117,9 +122,9 @@ export default function News() {
               </div>
             ) : (
               news.map((item, index) => (
-                <Link 
+                <Link
                   href={`/news/${item._id}`}
-                  key={item._id} 
+                  key={item._id}
                   className="break-inside-avoid bg-[#131A26] border border-gray-800 hover:border-emerald-600/40 
                   rounded-[24px] p-6 shadow-md hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] cursor-pointer transition-all duration-300 group flex flex-col relative block"
                 >
@@ -132,18 +137,18 @@ export default function News() {
                       {timeAgo(item.createdAt)}
                     </span>
                   </div>
-                  
+
                   <h2 className="text-[18px] font-bold mb-3 leading-snug text-gray-100 group-hover:text-emerald-400 transition-colors">
                     {item.title}
                   </h2>
-                  
+
                   {/* Subtle separator inside card */}
                   <div className="w-full h-px bg-gray-800/80 mb-3" />
-                  
+
                   <p className="text-gray-400 text-[14px] leading-[1.65] mb-5 flex-grow font-medium">
                     {item.enhancedContent}
                   </p>
-                  
+
                   <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-800/80">
                     <div className="flex items-center gap-2.5">
                       {item.sourceLogo ? (
@@ -155,13 +160,13 @@ export default function News() {
                           {item.source.substring(0, 2).toUpperCase()}
                         </div>
                       )}
-                      
+
                       <span className="text-[12px] font-semibold text-gray-400">
                         {item.source}
                       </span>
                     </div>
-                    
-                    <button 
+
+                    <button
                       onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(item.originalLink, '_blank'); }}
                       className="inline-flex items-center gap-1.5 text-[13px] font-bold text-gray-400 hover:text-emerald-400 transition-colors"
                     >
