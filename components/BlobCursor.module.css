@@ -1,5 +1,5 @@
 .blob-container-global {
-  pointer-events: none;
+  pointer-events: none !important;
   position: fixed;
   top: 0;
   left: 0;
