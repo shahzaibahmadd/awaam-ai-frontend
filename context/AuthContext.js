@@ -27,7 +27,13 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    router.push('/dashboard');
+    
+    const redirectQuery = router.query.redirect_query;
+    if (redirectQuery) {
+      router.push(`/chat?prompt=${encodeURIComponent(redirectQuery)}`);
+    } else {
+      router.push('/dashboard');
+    }
   };
 
   const logout = () => {

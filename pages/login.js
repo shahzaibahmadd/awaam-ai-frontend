@@ -67,7 +67,10 @@ export default function LoginPage() {
           </form>
           <p className="text-center text-gray-400 text-sm mt-4">
             Don't have an account?{' '}
-            <Link href="/register" className="text-green-400 hover:underline">
+            <Link 
+              href={router.query.redirect_query ? `/register?redirect_query=${encodeURIComponent(router.query.redirect_query)}` : "/register"} 
+              className="text-green-400 hover:underline"
+            >
               Register
             </Link>
           </p>

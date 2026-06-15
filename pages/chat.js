@@ -29,6 +29,22 @@ export default function ChatPage() {
   }, []);
 
   useEffect(() => {
+    if (router.isReady && router.query.prompt) {
+      setInput(router.query.prompt);
+      
+      const { prompt, ...queryWithoutPrompt } = router.query;
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: queryWithoutPrompt,
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  }, [router.isReady, router.query.prompt]);
+
+  useEffect(() => {
     if (!isMounted) return;
     const token = getToken();
     if (!token) {
