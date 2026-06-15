@@ -3,7 +3,7 @@ import Head from 'next/head';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
+import Layout from '../components/Layout';
 
 export default function News() {
   const [news, setNews] = useState([]);
@@ -55,9 +55,8 @@ export default function News() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B111D] text-gray-100 flex flex-col font-sans">
-      <Navbar />
-      <main className="max-w-6xl mx-auto px-4 md:px-6 flex-1 w-full relative z-10 pt-28 pb-12">
+    <Layout>
+      <main className="max-w-6xl mx-auto px-4 md:px-6 flex-1 w-full relative z-10 pt-16 pb-12 bg-transparent">
 
         {/* Page Header matching 'Good Evening, Pakistanio!' vibe */}
         <header className="mb-12 text-center md:text-left flex flex-col items-center md:items-start">
@@ -182,6 +181,6 @@ export default function News() {
           </div>
         )}
       </main>
-    </div>
+    </Layout>
   );
 }

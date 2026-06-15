@@ -8,13 +8,13 @@ module.exports = {
     extend: {
       colors: {
         gemini: {
-          bg: '#131314', // Main background
-          surface: '#1E1F20', // Sidebar / Cards
-          hover: '#28292A', // Hover states
-          green: '#44C961', // Primary Green Accent
-          'green-dark': '#35A04D',
+          bg: '#041B18', // Deep, muted dark teal base
+          surface: '#072C27', // Sidebar / Cards teal fill
+          hover: '#0A3F38', // Hover states
+          green: '#46DBA5', // Vibrant green logo highlight accent
+          'green-dark': '#38b286',
           text: '#E3E3E3',
-          'text-secondary': '#A8A8A8',
+          'text-secondary': '#8ba29d', // Muted secondary teal text
         }
       }
     },

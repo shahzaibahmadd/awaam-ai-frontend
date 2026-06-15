@@ -5,7 +5,7 @@ export default function ChatSubnav({ onSelect, onToggleSidebar }) {
 
   return (
     <div className="sticky top-0 z-10 bg-gemini-bg pt-2">
-      <div className="mx-auto max-w-3xl px-4 flex items-center gap-4 border-b border-gray-800">
+      <div className="mx-auto max-w-3xl md:max-w-4xl px-4 flex items-center gap-4 border-b border-white/5">
         <button
           onClick={onToggleSidebar}
           className="md:hidden p-2 -ml-2 text-gray-400 hover:text-white transition-colors focus:outline-none"

@@ -10,7 +10,7 @@ export default function LoggedInNavbar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar w-full max-w-full overflow-hidden">
       <div className="navbar-left">
         <h1 className="logo">AI Document Guide</h1>
       </div>
@@ -29,15 +29,23 @@ export default function LoggedInNavbar() {
           padding: 1rem 2rem;
           background: #171717;
           color: white;
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
         }
         .logo {
           font-size: 1.5rem;
           font-weight: bold;
         }
         .navbar-right {
-          display: flex;
+          display: none;
           gap: 1rem;
           align-items: center;
+        }
+        @media (min-width: 768px) {
+          .navbar-right {
+            display: flex;
+          }
         }
         .nav-link {
           background: #0070f3;

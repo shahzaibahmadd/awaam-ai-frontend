@@ -205,13 +205,13 @@ export default function ChatPage() {
                   if (parsed.reply) {
                     setMessages((prev) => prev.map(msg =>
                       msg.id === aiMessageId
-                        ? { ...msg, content: parsed.reply, isTyping: false }
+                        ? { ...msg, content: parsed.reply, isTyping: false, responseTime: parsed.responseTime || msg.responseTime }
                         : msg
                     ));
                   } else {
                     setMessages((prev) => prev.map(msg =>
                       msg.id === aiMessageId
-                        ? { ...msg, isTyping: false }
+                        ? { ...msg, isTyping: false, responseTime: parsed.responseTime || msg.responseTime }
                         : msg
                     ));
                   }
@@ -318,13 +318,13 @@ export default function ChatPage() {
                   if (parsed.reply) {
                     setMessages((prev) => prev.map(msg =>
                       msg.id === aiMessageId
-                        ? { ...msg, content: parsed.reply, isTyping: false }
+                        ? { ...msg, content: parsed.reply, isTyping: false, responseTime: parsed.responseTime || msg.responseTime }
                         : msg
                     ));
                   } else {
                     setMessages((prev) => prev.map(msg =>
                       msg.id === aiMessageId
-                        ? { ...msg, isTyping: false }
+                        ? { ...msg, isTyping: false, responseTime: parsed.responseTime || msg.responseTime }
                         : msg
                     ));
                   }
@@ -398,8 +398,8 @@ export default function ChatPage() {
   };
 
   return (
-    <Layout>
-      <div className="relative flex h-[calc(100vh-64px)] overflow-hidden bg-gray-900 text-gray-100">
+    <Layout noScroll={true}>
+      <div className="relative flex w-full h-[calc(100vh-57px)] overflow-hidden bg-transparent text-gray-100">
         <ChatSidebar
           chats={chats}
           selectedChatId={selectedChat?._id}
@@ -421,71 +421,89 @@ export default function ChatPage() {
           />
         )}
 
-        <main className="flex-1 flex flex-col min-w-0 bg-gray-900">
+        <main className="flex-1 flex flex-col min-w-0 bg-transparent relative">
           <ChatSubnav
             onSelect={(dept) => setInput(`${dept}: `)}
             onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           />
 
-          <div className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
-            <div className="max-w-3xl mx-auto space-y-6">
+          <div className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth pb-32 md:pb-40">
+            <div className="max-w-3xl md:max-w-4xl mx-auto space-y-8 w-full px-4 md:px-0">
               {(!selectedChat || !selectedChat._id || messages.length === 0) ? (
-                <div className="mt-20 space-y-8 animate-in fade-in duration-500">
-                  <div className="space-y-2">
-                    <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-gemini-green to-emerald-400">
+                <div className="mt-16 space-y-10 animate-in fade-in duration-500">
+                  <div className="space-y-3">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-[#46DBA5] to-emerald-400">
                       Hello, {userData?.name ? userData.name.split(' ')[0] : 'User'}
                     </h1>
-                    <p className="text-2xl text-gray-400">How can I help you today?</p>
+                    <p className="text-xl sm:text-2xl text-gray-400/90 font-medium">How can I help you today?</p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Suggestion Cards */}
                     {['How do I renew my license?', 'Check vehicle registration', 'Property tax calculator', 'Apply for domicile'].map((suggestion, i) => (
                       <button
                         key={i}
                         onClick={() => setInput(suggestion)}
-                        className="text-left p-4 rounded-xl bg-gemini-surface hover:bg-gemini-hover transition-colors border border-transparent hover:border-gray-700 text-gray-200"
+                        className="text-left p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 hover:shadow-lg hover:shadow-emerald-950/20 transition-all duration-300 text-gray-200 text-sm font-medium hover:scale-[1.02] active:scale-[0.98] group flex flex-col justify-between gap-4"
                       >
-                        {suggestion}
+                        <span className="flex-grow">{suggestion}</span>
+                        <span className="self-end p-2 bg-white/5 text-[#46DBA5] rounded-xl group-hover:bg-[#46DBA5] group-hover:text-teal-950 transition-all duration-300">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                          </svg>
+                        </span>
                       </button>
                     ))}
                   </div>
                 </div>
               ) : (
                 messages.map((msg, i) => (
-                  <div key={msg.id || i} className={`group flex gap-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div key={msg.id || i} className={`group flex gap-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
                     {msg.role === 'ai' && (
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-gemini-green flex items-center justify-center shrink-0">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" /></svg>
+                      <div className="w-8 h-8 rounded-lg bg-gemini-green/10 ring-1 ring-gemini-green/30 flex items-center justify-center shrink-0 font-extrabold text-gemini-green text-xs mt-1 select-none">
+                        AI
                       </div>
                     )}
-                    <div className="flex flex-col max-w-[80%]">
-                      <div className={`rounded-2xl px-5 py-3.5 leading-relaxed shadow-md ${msg.role === 'user'
-                        ? 'bg-teal-700/80 text-white rounded-tr-sm backdrop-blur-sm' // Bluish Green for User
-                        : 'bg-cyan-800/60 text-gray-100 backdrop-blur-sm' // Greenish Blue for AI
+                    <div className={`flex flex-col ${msg.role === 'user' ? 'max-w-[85%] sm:max-w-[70%]' : 'max-w-[90%] flex-1'}`}>
+                      <div className={`leading-relaxed caret-transparent select-text cursor-default ${msg.role === 'user'
+                        ? 'bg-[#0A3F38]/80 text-gray-100 rounded-3xl px-5 py-3 border border-[#46DBA5]/25 shadow-md backdrop-blur-sm'
+                        : 'text-gray-100 text-[15px] sm:text-[16px] leading-7 mt-1.5'
                         }`}>
                         <div className="whitespace-pre-wrap">
                           {msg.content}
                           {msg.role === 'ai' && msg.isTyping && (
-                            <span className="animate-pulse text-emerald-400 ml-1">|</span>
+                            <span className="inline-block animate-pulse text-[#46DBA5] ml-1 font-bold">|</span>
                           )}
                         </div>
                       </div>
                       {msg.role === 'ai' && msg.responseTime && (
-                        <span className="text-xs text-gray-500 mt-1 ml-2">{msg.responseTime}s</span>
+                        <div className="text-xs text-gray-500 mt-1 pl-1 font-mono select-none">
+                          {msg.responseTime}s response time
+                        </div>
                       )}
                     </div>
                   </div>
                 ))
               )}
-              {loading && <div className="ml-12 text-gray-400 animate-pulse">Thinking...</div>}
+              {loading && (
+                <div className="flex gap-4 items-start ml-12 animate-pulse">
+                  <div className="w-8 h-8 rounded-lg bg-gemini-green/10 ring-1 ring-gemini-green/30 flex items-center justify-center shrink-0 font-extrabold text-gemini-green text-xs mt-1 select-none">
+                    AI
+                  </div>
+                  <div className="flex-1 space-y-3 max-w-md mt-2">
+                    <div className="h-2.5 bg-gradient-to-r from-[#46DBA5]/20 via-[#46DBA5]/50 to-[#46DBA5]/20 rounded-full w-3/4 animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
+                    <div className="h-2.5 bg-gradient-to-r from-[#46DBA5]/20 via-[#46DBA5]/50 to-[#46DBA5]/20 rounded-full w-1/2 animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
+                    <div className="h-2.5 bg-gradient-to-r from-[#46DBA5]/20 via-[#46DBA5]/50 to-[#46DBA5]/20 rounded-full w-5/6 animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="p-4 bg-gray-900 sticky bottom-0">
-            <div className={`max-w-3xl mx-auto bg-gemini-surface rounded-3xl flex items-center justify-between w-full gap-2 px-3 py-2 ring-1 ring-gray-700/50 focus-within:ring-gemini-green/50 transition-shadow ${loading ? 'opacity-50' : ''}`}>
-              <button className="p-2 rounded-full hover:bg-gemini-hover text-gray-400 transition-colors shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <div className="p-4 bg-gradient-to-t from-[#131314] via-[#131314]/95 to-transparent absolute bottom-0 left-0 right-0 z-10 pt-8 pb-6">
+            <div className={`max-w-3xl md:max-w-4xl mx-auto bg-white/5 border border-white/10 backdrop-blur-md rounded-full flex items-center justify-between w-full gap-2 px-3 sm:px-4 py-2 hover:border-white/20 focus-within:border-[#46DBA5]/30 focus-within:ring-1 focus-within:ring-[#46DBA5]/20 transition-all duration-300 ${loading ? 'opacity-50' : ''}`}>
+              <button className="h-9 w-9 flex items-center justify-center rounded-full hover:bg-white/5 text-gray-400 hover:text-white transition-all duration-300 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </button>
@@ -495,7 +513,7 @@ export default function ChatPage() {
                 onKeyDown={(e) => e.key === "Enter" && !loading && sendMessage()}
                 placeholder="Enter a prompt here"
                 disabled={loading}
-                className="flex-1 min-w-0 bg-transparent border-none outline-none text-gray-100 placeholder-gray-500 h-12 px-2"
+                className="flex-1 min-w-0 bg-transparent border-none outline-none text-gray-100 placeholder-gray-500 h-12 px-2 text-sm sm:text-base"
               />
 
               <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -517,23 +535,23 @@ export default function ChatPage() {
                       }
                     }
                   }}
-                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full transition-colors text-white shadow-lg ${ttsEnabled
-                    ? 'bg-teal-700 shadow-teal-900/20'
-                    : 'bg-teal-600 hover:bg-teal-500 shadow-teal-900/20'
+                  className={`flex items-center justify-center gap-1.5 px-3 h-9 text-xs rounded-full transition-all duration-300 select-none ${ttsEnabled
+                    ? 'bg-gemini-green text-gemini-bg font-bold shadow-lg shadow-gemini-green/20'
+                    : 'bg-gemini-green/10 hover:bg-gemini-green/20 text-gemini-green border border-gemini-green/20'
                     }`}
                   title="Hold to Listen"
                 >
                   {ttsEnabled ? (
                     <>
                       <span className="hidden sm:inline">Listening...</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 animate-pulse">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 animate-pulse">
                         <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 2.485.735 4.817 2.018 6.772.33 1.134 1.455 1.728 2.555 1.728h1.275l5.242 5.242c.875.875 2.385.253 2.385-1.002V13.5h.525c.82 0 1.625.32 2.228.895.534.51.817 1.25.817 2.095v.015c0 .845-.283 1.585-.817 2.095-.603.575-1.408.895-2.228.895H13.25c-1.243 0-2.25 1.007-2.25 2.25s1.007 2.25 2.25 2.25h1.59c1.64 0 3.25-.64 4.455-1.79 1.25-1.19 1.955-2.915 1.955-4.805v-.015c0-1.89-.705-3.615-1.955-4.805A6.02 6.02 0 0015.375 14h-.5V4.06zM13.5 4.06v9.44m0-9.44c1.243 0 2.25 1.007 2.25 2.25v2.25" />
                       </svg>
                     </>
                   ) : (
                     <>
                       <span className="hidden sm:inline">Hold to Listen</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.74 3.63 8.25 4.51 8.25H6.75z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
@@ -543,18 +561,36 @@ export default function ChatPage() {
 
                 <VoiceRecorder onTranscribed={(text) => setInput(prev => prev + " " + text)} />
                 {input.trim() && (
-                  <button onClick={sendMessage} className="p-2 rounded-full bg-gemini-green text-black hover:bg-gemini-green-dark transition-colors shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                  <button onClick={sendMessage} className="h-9 w-9 flex items-center justify-center rounded-full bg-gemini-green text-gemini-bg hover:bg-gemini-green-dark transition-all duration-300 hover:scale-105 shrink-0 shadow-lg shadow-gemini-green/25">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                       <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
                     </svg>
                   </button>
                 )}
               </div>
             </div>
-            {/* Disclaimer Removed */}
           </div>
         </main>
       </div>
+      <style jsx global>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+          animation: shimmer 2.5s infinite linear;
+        }
+        .animate-spin-slow {
+          animation: spin 6s linear infinite;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.4s ease-out forwards;
+        }
+      `}</style>
     </Layout>
   );
 }

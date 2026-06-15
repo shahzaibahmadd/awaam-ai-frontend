@@ -2,17 +2,17 @@
 
 @theme {
   --color-gemini-bg: #131314;
-  --color-gemini-surface: #1E1F20;
-  --color-gemini-hover: #28292A;
-  --color-gemini-green: #44C961;
-  --color-gemini-green-dark: #35A04D;
+  --color-gemini-surface: #1e1f20;
+  --color-gemini-hover: #2d2f31;
+  --color-gemini-green: #34d399;
+  --color-gemini-green-dark: #059669;
   --color-gemini-text: #E3E3E3;
-  --color-gemini-text-secondary: #A8A8A8;
+  --color-gemini-text-secondary: #9ca3af;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #131314;
+  --foreground: #E3E3E3;
 }
 
 @media (prefers-color-scheme: dark) {

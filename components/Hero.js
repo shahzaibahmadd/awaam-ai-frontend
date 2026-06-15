@@ -9,25 +9,6 @@ export default function Hero() {
   const [query, setQuery] = useState('');
   const inputRef = useRef(null);
 
-  // Ghost cursor (inspired by reactbits ghost-cursor)
-  const cursorRef = useRef(null);
-  useEffect(() => {
-    const el = cursorRef.current;
-    if (!el) return;
-    let x = window.innerWidth / 2, y = window.innerHeight / 2;
-    let tx = x, ty = y;
-    const onMove = (e) => { tx = e.clientX; ty = e.clientY; };
-    const raf = () => {
-      x += (tx - x) * 0.12; // ease follow
-      y += (ty - y) * 0.12;
-      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      requestAnimationFrame(raf);
-    };
-    window.addEventListener('mousemove', onMove);
-    const id = requestAnimationFrame(raf);
-    return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(id); };
-  }, []);
-
   // Keyboard shortcut: '/' to focus search input
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -53,12 +34,6 @@ export default function Hero() {
 
   return (
     <section className="relative isolate min-h-[78vh] pt-16 md:pt-0 flex items-center justify-center overflow-hidden">
-      {/* animated glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-emerald-900/10 via-transparent to-transparent" />
-      <div className="pointer-events-none absolute left-1/2 top-10 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl animate-float" />
-      {/* ghost cursor */}
-      <div ref={cursorRef} className="pointer-events-none fixed left-0 top-0 -z-10 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-400/15 ring-1 ring-emerald-400/30 blur-[1px]" />
-
       <div className="mx-auto w-full max-w-3xl px-4 text-center">
         <p className="text-xs uppercase tracking-[0.3em] text-emerald-300/80">Pakistan Government Services</p>
         <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-100">

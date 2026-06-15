@@ -154,7 +154,7 @@ export default function Tracker() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-7xl px-4 py-8 h-full flex flex-col md:flex-row gap-6 relative">
+      <div className="mx-auto max-w-7xl w-full px-4 py-8 h-full flex flex-col md:flex-row gap-6 relative">
         
         {/* Error Toast Notification */}
         {showToast && (
@@ -165,8 +165,8 @@ export default function Tracker() {
         )}
 
         <div className="w-full md:w-1/3 flex flex-col gap-4">
-          <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/80 backdrop-blur-md p-5 shadow-xl shadow-black/20">
-            <h2 className="text-xl font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+          <div className="rounded-2xl border border-white/5 bg-gemini-surface/80 backdrop-blur-md p-5 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-semibold text-gemini-green mb-4 flex items-center gap-2">
               <DocumentTextIcon className="w-6 h-6" />
               Available Procedures
             </h2>
@@ -179,15 +179,15 @@ export default function Tracker() {
                     onClick={() => handleSelectProcedure(proc)}
                     className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 border flex items-center justify-between ${
                       selectedProcedure === proc 
-                        ? 'bg-emerald-900/40 border-emerald-500/50 shadow-inner' 
-                        : 'bg-gray-800/50 border-gray-700 hover:bg-gray-800 hover:border-emerald-500/30'
+                        ? 'bg-gemini-green/10 border-gemini-green/30 shadow-inner' 
+                        : 'bg-gemini-surface/50 border-white/5 hover:bg-gemini-hover hover:border-gemini-green/30'
                     }`}
                   >
                     <span className={`font-medium ${selectedProcedure === proc ? 'text-white' : 'text-gray-300'}`}>
                       {proc}
                     </span>
                     {active && active.overallProgress > 0 && (
-                      <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full border border-emerald-500/30">
+                      <span className="text-xs bg-gemini-green/20 text-[#46DBA5] px-2 py-1 rounded-full border border-gemini-green/30">
                         {active.overallProgress}%
                       </span>
                     )}
@@ -199,28 +199,28 @@ export default function Tracker() {
         </div>
 
         <div className="w-full md:w-2/3 flex flex-col">
-          <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/80 backdrop-blur-md flex-1 p-6 flex flex-col shadow-xl shadow-black/20 relative overflow-hidden">
+          <div className="rounded-2xl border border-white/5 bg-gemini-surface/80 backdrop-blur-md flex-1 p-6 flex flex-col shadow-xl shadow-black/20 relative overflow-hidden">
             
-            <div className="absolute -top-32 -right-32 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -top-32 -right-32 w-64 h-64 bg-gemini-green/10 rounded-full blur-3xl pointer-events-none"></div>
 
             {!selectedProcedure ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center opacity-70">
-                <DocumentTextIcon className="w-20 h-20 text-emerald-500/50 mb-4" />
+                <DocumentTextIcon className="w-20 h-20 text-gemini-green/50 mb-4" />
                 <h3 className="text-2xl font-semibold text-gray-200">Select a Procedure</h3>
                 <p className="text-gray-400 mt-2 max-w-md">Choose a legal procedure from the menu to generate a smart AI checklist tailored to your requirements.</p>
               </div>
             ) : loading ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center">
                 <div className="relative mb-6">
-                  <ArrowPathIcon className="w-14 h-14 text-emerald-500 animate-spin relative z-10" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-emerald-500/30 rounded-full animate-ping"></div>
+                  <ArrowPathIcon className="w-14 h-14 text-gemini-green animate-spin relative z-10" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gemini-green/30 rounded-full animate-ping"></div>
                 </div>
-                <h3 className="text-xl font-medium text-emerald-400">Syncing with Official Requirements...</h3>
+                <h3 className="text-xl font-medium text-gemini-green">Syncing with Official Requirements...</h3>
                 <p className="text-gray-400 mt-2">Retrieving structured legal prerequisites.</p>
                 
                 {/* Pulsing loading bar */}
-                <div className="w-64 h-2 bg-gray-800 rounded-full mt-6 overflow-hidden">
-                  <div className="h-full bg-emerald-500 w-full animate-pulse-fast"></div>
+                <div className="w-64 h-2 bg-[#041B18] rounded-full mt-6 overflow-hidden">
+                  <div className="h-full bg-gemini-green w-full animate-pulse-fast"></div>
                 </div>
               </div>
             ) : (
@@ -234,7 +234,7 @@ export default function Tracker() {
                   <div className="flex gap-3">
                     <button 
                       onClick={handleGoogleMapsSearch}
-                      className="flex items-center gap-2 text-sm bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 px-4 py-2 rounded-lg border border-blue-500/30 transition-colors whitespace-nowrap"
+                      className="flex items-center gap-2 text-sm bg-gemini-green/10 hover:bg-gemini-green/20 text-gemini-green px-4 py-2 rounded-lg border border-gemini-green/30 transition-colors whitespace-nowrap"
                     >
                       <MapPinIcon className="w-4 h-4" /> Office Finder
                     </button>
@@ -250,11 +250,11 @@ export default function Tracker() {
                 <div className="mb-8 z-10">
                   <div className="flex justify-between items-end mb-2">
                     <span className="text-sm font-medium text-gray-300">Overall Progress</span>
-                    <span className="text-xl font-bold text-emerald-400">{overallProgress}%</span>
+                    <span className="text-xl font-bold text-gemini-green">{overallProgress}%</span>
                   </div>
-                  <div className="w-full h-3 bg-gray-800 rounded-full overflow-hidden border border-gray-700/50">
+                  <div className="w-full h-3 bg-[#041B18] rounded-full overflow-hidden border border-white/5">
                     <div 
-                      className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-700 ease-out relative"
+                      className="h-full bg-gradient-to-r from-[#46DBA5] to-emerald-400 transition-all duration-700 ease-out relative"
                       style={{ width: `${overallProgress}%` }}
                     >
                       <div className="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] animate-[flow_1s_linear_infinite]"></div>
@@ -266,10 +266,10 @@ export default function Tracker() {
                   {checklist.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center text-center mt-10">
                       <div className="relative mb-6">
-                        <ArrowPathIcon className="w-14 h-14 text-emerald-500 animate-spin relative z-10" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-emerald-500/30 rounded-full animate-ping"></div>
+                        <ArrowPathIcon className="w-14 h-14 text-gemini-green animate-spin relative z-10" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gemini-green/30 rounded-full animate-ping"></div>
                       </div>
-                      <h3 className="text-xl font-medium text-emerald-400">Syncing with Official Requirements...</h3>
+                      <h3 className="text-xl font-medium text-gemini-green">Syncing with Official Requirements...</h3>
                     </div>
                   ) : (
                     checklist.map((item, index) => (
@@ -277,8 +277,8 @@ export default function Tracker() {
                         key={index} 
                         className={`group flex flex-col p-4 rounded-xl border transition-all duration-300 ${
                           item.isCompleted 
-                            ? 'bg-emerald-900/20 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.05)]' 
-                            : 'bg-gray-800/40 border-gray-700 hover:border-gray-500'
+                            ? 'bg-gemini-green/10 border-gemini-green/30 shadow-[0_0_15px_rgba(70,219,165,0.05)]' 
+                            : 'bg-gemini-surface/40 border-white/5 hover:border-[#46DBA5]/30'
                         }`}
                       >
                         <div className="flex items-start justify-between">
@@ -288,9 +288,9 @@ export default function Tracker() {
                               className="mt-0.5 focus:outline-none flex-shrink-0"
                             >
                               {item.isCompleted ? (
-                                <CheckCircleIcon className="w-6 h-6 text-emerald-500 transition-transform duration-300 scale-110" />
+                                <CheckCircleIcon className="w-6 h-6 text-gemini-green transition-transform duration-300 scale-110" />
                               ) : (
-                                <div className="w-6 h-6 rounded-full border-2 border-gray-500 group-hover:border-emerald-400 transition-colors duration-300" />
+                                <div className="w-6 h-6 rounded-full border-2 border-gray-500 group-hover:border-gemini-green transition-colors duration-300" />
                               )}
                             </button>
                             <div className="flex flex-col flex-1">
@@ -317,7 +317,7 @@ export default function Tracker() {
                           {!item.isCompleted && (
                             <button 
                               onClick={() => handleRemindMe(item.task)}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs flex items-center gap-1 text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/20 ml-2"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs flex items-center gap-1 text-gemini-green hover:text-[#3bb88b] bg-gemini-green/10 px-3 py-1.5 rounded-lg border border-gemini-green/20 ml-2"
                             >
                               <BellAlertIcon className="w-4 h-4" /> Vault
                             </button>

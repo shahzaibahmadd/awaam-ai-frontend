@@ -114,7 +114,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="relative">
+      <div className="relative w-full">
         {/* Liquid Ether background (client-only, deferred, wide screens) */}
         {isClient && showBackground && (
           <div className="absolute inset-0 -z-0">
@@ -144,35 +144,35 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 py-8 space-y-8">
+        <div className="relative z-10 mx-auto max-w-6xl w-full px-4 py-8 space-y-8">
           {/* Welcome Section */}
-          <section>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-100">
+          <section className="animate-fadeIn">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-[#46DBA5] to-emerald-400">
               Welcome back, {userData?.name || userData?.username || 'Guest'}!
             </h1>
             <p className="mt-1 text-gray-400">Here's your personalized dashboard with insights and quick access.</p>
           </section>
 
           {/* Stats Cards */}
-          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Total Chats</h3>
-              <p className="mt-2 text-2xl font-bold text-emerald-400">{chatStats.total}</p>
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 animate-fadeIn">
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/80 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/20 hover:scale-[1.01]">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Total Chats</h3>
+              <p className="mt-2 text-3xl font-bold text-gemini-green">{chatStats.total}</p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Today's Chats</h3>
-              <p className="mt-2 text-2xl font-bold text-emerald-400">{chatStats.today}</p>
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/80 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/20 hover:scale-[1.01]">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Today's Chats</h3>
+              <p className="mt-2 text-3xl font-bold text-gemini-green">{chatStats.today}</p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Account Status</h3>
-              <p className="mt-2 text-sm text-emerald-400">✓ Active</p>
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/80 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/20 hover:scale-[1.01]">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Account Status</h3>
+              <p className="mt-2 text-base font-bold text-gemini-green">✓ Active</p>
             </div>
 
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Member Since</h3>
-              <p className="mt-2 text-sm text-gray-400">
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/80 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/20 hover:scale-[1.01]">
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Member Since</h3>
+              <p className="mt-2 text-base font-bold text-gray-200">
                 {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString() : '2025'}
               </p>
             </div>
@@ -180,33 +180,33 @@ export default function Dashboard() {
 
           {/* Profile & Usage Section */}
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Your Profile</h3>
-              <dl className="mt-3 space-y-1 text-sm text-gray-400">
-                <div className="flex justify-between"><dt>Name</dt><dd className="text-gray-200">{userData?.name || userData?.username || 'Guest'}</dd></div>
-                <div className="flex justify-between"><dt>Email</dt><dd className="text-gray-200">{userData?.email || 'guest@example.com'}</dd></div>
-                <div className="flex justify-between"><dt>Status</dt><dd className="text-emerald-400">Online</dd></div>
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/60 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/10">
+              <h3 className="text-lg font-bold text-gray-100 mb-3 border-b border-white/5 pb-2">Your Profile</h3>
+              <dl className="space-y-2 text-sm text-gray-400">
+                <div className="flex justify-between"><dt>Name</dt><dd className="text-gray-200 font-medium">{userData?.name || userData?.username || 'Guest'}</dd></div>
+                <div className="flex justify-between"><dt>Email</dt><dd className="text-gray-200 font-medium">{userData?.email || 'guest@example.com'}</dd></div>
+                <div className="flex justify-between"><dt>Status</dt><dd className="text-gemini-green font-medium">Online</dd></div>
               </dl>
             </div>
 
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Usage Insights</h3>
-              <p className="mt-2 text-sm text-gray-400">
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/60 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/10">
+              <h3 className="text-lg font-bold text-gray-100 mb-3 border-b border-white/5 pb-2">Usage Insights</h3>
+              <p className="text-sm text-gray-400 leading-relaxed">
                 {chatStats.today > 0
                   ? `You've been active today with ${chatStats.today} chat${chatStats.today > 1 ? 's' : ''}.`
                   : 'Start your first chat today to get personalized insights.'
                 }
               </p>
               {chatStats.total > 0 && (
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-3 text-xs text-gemini-green/80 font-semibold bg-gemini-green/5 py-1 px-2.5 rounded-lg border border-gemini-green/10 w-fit">
                   Average: {Math.round(chatStats.total / Math.max(1, Math.floor((Date.now() - new Date(userData?.createdAt || Date.now()).getTime()) / (1000 * 60 * 60 * 24))))} chats/day
                 </p>
               )}
             </div>
 
-            <div className="rounded-2xl border border-emerald-900/40 bg-gray-900/60 p-5">
-              <h3 className="text-lg font-semibold text-gray-100">Tips & Tricks</h3>
-              <ul className="mt-2 list-disc pl-5 text-sm text-gray-400">
+            <div className="rounded-2xl border border-white/5 bg-gemini-surface/60 backdrop-blur-md p-5 transition-all duration-300 hover:border-gemini-green/10">
+              <h3 className="text-lg font-bold text-gray-100 mb-3 border-b border-white/5 pb-2">Tips & Tricks</h3>
+              <ul className="list-disc pl-5 text-sm text-gray-400 space-y-1">
                 <li>Ask in Urdu or English</li>
                 <li>Prefix with department: "NADRA: family registration"</li>
                 <li>Use specific keywords for better results</li>
@@ -216,17 +216,20 @@ export default function Dashboard() {
 
           {/* Recent Activity */}
           {recentChats.length > 0 && (
-            <section>
-              <h2 className="text-xl font-semibold text-gray-100 mb-4">Recent Activity</h2>
+            <section className="space-y-4">
+              <h2 className="text-xl font-bold text-gray-100 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-gemini-green"></span>
+                Recent Activity
+              </h2>
               <div className="space-y-3">
                 {recentChats.map((chat, index) => (
-                  <div key={chat._id || index} className="rounded-xl border border-emerald-900/40 bg-gray-900/60 p-4">
+                  <div key={chat._id || index} className="rounded-xl border border-white/5 bg-gemini-surface/50 hover:bg-gemini-surface/80 p-4 transition-all duration-300 hover:border-gemini-green/15">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="text-sm font-medium text-gray-100">{chat.title}</h4>
-                        <p className="text-xs text-gray-500 mt-1">{chat.lastMessage?.slice(0, 60) || 'No messages yet'}...</p>
+                        <h4 className="text-sm font-semibold text-gray-100">{chat.title}</h4>
+                        <p className="text-xs text-gray-400 mt-1">{chat.lastMessage?.slice(0, 80) || 'No messages yet'}...</p>
                       </div>
-                      <span className="text-xs text-gray-600">
+                      <span className="text-xs text-gray-500 font-medium">
                         {new Date(chat.updatedAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -237,14 +240,17 @@ export default function Dashboard() {
           )}
 
           {/* Government Services Overview */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-100 mb-4">Government Services</h2>
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gemini-green"></span>
+              Government Services
+            </h2>
             <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {['DLIMS', 'NADRA', 'DGIP', 'Zameen', 'ECP', 'FBR', 'SECP', 'PSP'].map((service) => (
-                <div key={service} className="rounded-xl border border-emerald-900/40 bg-gray-900/60 p-4 text-center">
-                  <h4 className="text-sm font-medium text-gray-100">{service}</h4>
-                  <p className="text-xs text-gray-500 mt-1">Government Service</p>
-                  <a href="/chat" className="text-xs text-emerald-400 hover:text-emerald-300 mt-2 inline-block">
+                <div key={service} className="rounded-xl border border-white/5 bg-gemini-surface/50 p-5 text-center transition-all duration-300 hover:border-gemini-green/20 hover:scale-[1.02] hover:bg-gemini-surface/80">
+                  <h4 className="text-base font-bold text-gray-100">{service}</h4>
+                  <p className="text-xs text-gray-400 mt-1">Government Service</p>
+                  <a href="/chat" className="text-xs text-gemini-green font-semibold hover:text-[#3bb88b] mt-3 inline-block transition-colors">
                     Ask about {service} →
                   </a>
                 </div>
@@ -253,35 +259,42 @@ export default function Dashboard() {
           </section>
 
           {/* Quick Actions */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-100 mb-4">Quick Actions</h2>
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gemini-green"></span>
+              Quick Actions
+            </h2>
             <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
               {demoLinks.map(link => (
-                <a key={link.title} href={link.href} className="rounded-xl border border-emerald-900/40 bg-gray-900/60 p-4 text-sm text-gray-300 hover:border-emerald-800 hover:text-white transition-colors">
-                  {link.title}
+                <a key={link.title} href={link.href} className="rounded-xl border border-white/5 bg-gemini-surface/50 hover:bg-gemini-surface/80 p-5 text-sm font-semibold text-gray-300 hover:border-gemini-green/20 hover:text-white transition-all duration-300 hover:scale-[1.02] flex justify-between items-center">
+                  <span>{link.title}</span>
+                  <span className="text-gemini-green">→</span>
                 </a>
               ))}
             </div>
           </section>
 
           {/* News & Updates */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-100 mb-4">Latest Updates</h2>
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-gray-100 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gemini-green"></span>
+              Latest Updates
+            </h2>
             <div className="space-y-3">
-              <div className="rounded-xl border border-emerald-900/40 bg-gray-900/60 p-4">
-                <h4 className="text-sm font-medium text-gray-100">New DLIMS Features</h4>
+              <div className="rounded-xl border border-white/5 bg-gemini-surface/50 p-4 hover:border-gemini-green/10 transition-colors">
+                <h4 className="text-sm font-semibold text-gray-100">New DLIMS Features</h4>
                 <p className="text-xs text-gray-400 mt-1">Updated information about DLIMS services and requirements.</p>
-                <span className="text-xs text-gray-600">2 days ago</span>
+                <span className="text-xs text-gray-500 font-medium mt-1 inline-block">2 days ago</span>
               </div>
-              <div className="rounded-xl border border-emerald-900/40 bg-gray-900/60 p-4">
-                <h4 className="text-sm font-medium text-gray-100">NADRA Process Updates</h4>
+              <div className="rounded-xl border border-white/5 bg-gemini-surface/50 p-4 hover:border-gemini-green/10 transition-colors">
+                <h4 className="text-sm font-semibold text-gray-100">NADRA Process Updates</h4>
                 <p className="text-xs text-gray-400 mt-1">Streamlined procedures for CNIC applications.</p>
-                <span className="text-xs text-gray-600">1 week ago</span>
+                <span className="text-xs text-gray-500 font-medium mt-1 inline-block">1 week ago</span>
               </div>
-              <div className="rounded-xl border border-emerald-900/40 bg-gray-900/60 p-4">
-                <h4 className="text-sm font-medium text-gray-100">System Maintenance</h4>
+              <div className="rounded-xl border border-white/5 bg-gemini-surface/50 p-4 hover:border-gemini-green/10 transition-colors">
+                <h4 className="text-sm font-semibold text-gray-100">System Maintenance</h4>
                 <p className="text-xs text-gray-400 mt-1">Scheduled maintenance completed successfully.</p>
-                <span className="text-xs text-gray-600">2 weeks ago</span>
+                <span className="text-xs text-gray-500 font-medium mt-1 inline-block">2 weeks ago</span>
               </div>
             </div>
           </section>

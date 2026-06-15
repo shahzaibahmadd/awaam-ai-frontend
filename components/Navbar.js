@@ -53,12 +53,12 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-20 border-b border-emerald-900/40 bg-gradient-to-b from-gray-900/80 to-gray-900/40 backdrop-blur-xl">
-      <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-20 border-b border-gemini-green/10 bg-gemini-bg/80 backdrop-blur-md w-full max-w-full overflow-hidden">
+      <nav className="mx-auto max-w-6xl w-full px-4 py-3 flex items-center justify-between overflow-hidden">
         <Link href="/" className="inline-flex items-center gap-3 group shrink-0">
-          <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-500/30">
-            <span className="absolute inset-0 rounded-xl blur-md bg-emerald-500/30 group-hover:bg-emerald-400/40 transition-colors" />
-            <span className="text-lg font-bold text-emerald-300">AI</span>
+          <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gemini-green/15 ring-1 ring-gemini-green/30">
+            <span className="absolute inset-0 rounded-xl blur-md bg-gemini-green/30 group-hover:bg-gemini-green/40 transition-colors" />
+            <span className="text-lg font-bold text-gemini-green">AI</span>
           </span>
           <span className="text-lg sm:text-xl font-semibold tracking-tight text-gray-100">
             Awaam AI
@@ -124,7 +124,7 @@ export default function Navbar() {
           height: 2px;
           bottom: 0;
           left: 0;
-          background-color: #34d399; /* emerald-400 */
+          background-color: #46DBA5; /* vibrant logo green highlight */
           transition: width 0.3s ease;
         }
         .nav-link:hover::after, .nav-link.active::after {
@@ -135,13 +135,13 @@ export default function Navbar() {
           font-weight: 600;
         }
         .button-primary { 
-          @apply px-4 py-2 rounded-md text-sm md:text-[18px] font-medium bg-emerald-600 text-white hover:bg-emerald-500 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/25; 
+          @apply px-4 py-2 rounded-md text-sm md:text-[18px] font-bold bg-[#46DBA5] text-teal-950 hover:bg-[#3bb88b] transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-[#46DBA5]/25; 
         }
         .button-secondary { 
-          @apply px-4 py-2 rounded-md text-sm md:text-[18px] font-medium bg-gray-800 text-gray-200 hover:bg-gray-700 transition-all duration-200 hover:scale-105; 
+          @apply px-4 py-2 rounded-md text-sm md:text-[18px] font-medium bg-gemini-surface text-gray-200 hover:bg-gemini-hover transition-all duration-200 hover:scale-105; 
         }
         .button-danger { 
-          @apply px-4 py-2 rounded-md text-sm md:text-[18px] font-medium bg-red-600 text-white hover:bg-red-500 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-red-500/25; 
+          @apply px-4 py-2 rounded-md text-sm md:text-[18px] font-medium bg-red-600/80 text-white hover:bg-red-500 transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-red-500/25; 
         }
       `}</style>
     </header>
