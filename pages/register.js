@@ -35,7 +35,7 @@ export default function RegisterPage() {
           } else {
             router.push('/login');
           }
-        }, 2000);
+        }, 3500);
       } else {
         setLoading(false);
         setError('Registration failed.');
@@ -50,13 +50,17 @@ export default function RegisterPage() {
     <Layout>
       <div className="flex-1 flex items-center justify-center p-4 relative">
         {showSuccessToast && (
-          <div className="fixed top-4 right-4 z-50 flex items-center gap-3 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-5 py-4 rounded-xl shadow-2xl backdrop-blur-md animate-fadeIn">
-            <svg className="w-6 h-6 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <div className="flex flex-col text-left">
-              <span className="text-sm font-semibold text-white">Registration successful!</span>
-              <span className="text-xs text-emerald-400/90 font-medium">Congrats! Please login to continue.</span>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+            <div className="w-full max-w-md mx-auto p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/25 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Registration successful!</h3>
+              <p className="text-emerald-400/90 text-sm font-medium">
+                Verification email sent! Please check your inbox.
+              </p>
             </div>
           </div>
         )}
